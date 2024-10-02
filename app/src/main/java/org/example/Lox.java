@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Lox {
+  private static boolean hadError = false;
+
   public String getGreeting() {
     return "Hello World!";
   }
@@ -19,7 +21,7 @@ public class Lox {
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
       System.out.println("Usage: jlox [script]");
-      // sysexits.h is what the codes are based on
+      // sysexits.h (https://manpages.ubuntu.com/manpages/lunar/man3/sysexits.h.3head.html) is what the codes are based on
       System.exit(64); 
     } else if (args.length == 1) {
       // Run from a file
@@ -53,13 +55,23 @@ public class Lox {
     byte[] bytes = Files.readAllBytes(Paths.get(path));
     // UTF-8 is probably going to be the default charset
     run(new String(bytes, Charset.defaultCharset()));
+    if (hadError) System.exit(65);
   }
 
 
   private static void run(String codeLine) {
-    // TODO Auto-generated method stub
     var scanner = new Scanner(codeLine);
     List<Token> tokens = scanner.scanTokens();
+  }
 
+  static void error(int line, String message) {
+    report(line, "", message);
+  }
+
+  private static void report(int line, String where, String message) {
+    // TODO: why is everything a static method?
+    System.err.println(
+        "[line " + line + "] Error" + where + ": " + message);
+    hadError = true;
   }
 }
