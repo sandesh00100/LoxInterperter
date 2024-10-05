@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Lox {
   private static boolean hadError = false;
@@ -28,6 +29,7 @@ public class Lox {
       runFile(args[0]);
     } else {
       // REPL
+      System.out.println("Running Prompt");
       runPrompt();
     }
   }
@@ -37,7 +39,7 @@ public class Lox {
     var input = new InputStreamReader(System.in);
     var reader = new BufferedReader(input);
     while(true){
-      System.out.println("> ");
+      System.out.print("> ");
       String line = reader.readLine();
       // When you do ctrl-d, it's the same as read line =- null
       if (line == null) break;
