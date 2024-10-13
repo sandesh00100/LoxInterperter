@@ -17,8 +17,8 @@ import static org.interperter.TokenType.*;
 public class Scanner {
   private final String source;
   private final List<Token> tokens = new ArrayList<>();
+  // List of meaningful reserved words
   private static final Map<String, TokenType> keywords;
-
   static {
     keywords = new HashMap<>();
     keywords.put("and",    AND);
@@ -38,6 +38,7 @@ public class Scanner {
     keywords.put("var",    VAR);
     keywords.put("while",  WHILE);
   }
+
   // start and current indicate the indices of the current token we're working on
   private int start = 0;
   private int current = 0;
@@ -236,7 +237,4 @@ public class Scanner {
   private boolean isAlphaNumeric(char c) {
     return isAlpha(c) || isDigit(c);
   }
-
-
-
 }
