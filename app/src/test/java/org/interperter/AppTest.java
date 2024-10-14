@@ -6,9 +6,23 @@ package org.interperter;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import org.interperter.grammar.AstPrinter;
+import org.interperter.grammar.Binary;
+import org.interperter.grammar.Expr;
+import org.interperter.grammar.Grouping;
+import org.interperter.grammar.Literal;
+import org.interperter.grammar.Unary;
+
 public class AppTest {
-    @Test public void appHasAGreeting() {
-        Lox classUnderTest = new Lox();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
-    }
+  @Test public void appHasAGreeting() {
+  Expr expression = new Binary(
+      new Unary(
+        new Token(TokenType.MINUS, "-", null, 1),
+        new Literal(123)),
+      new Token(TokenType.STAR, "*", null, 1),
+      new Grouping(
+        new Literal(45.67)));
+
+    System.out.println(new AstPrinter().print(expression));
+  }
 }
